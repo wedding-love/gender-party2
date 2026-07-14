@@ -55,7 +55,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* СПЛОШНОЙ МОЛОЧНЫЙ ФОН */
         body {
             background: #fcf8f5;
             font-family: 'Gravity', 'Segoe UI', sans-serif;
@@ -84,7 +83,6 @@
             width: 100%;
             background: url('главная.png') center center / cover no-repeat;
             background-color: #e8dccc;
-            cursor: pointer;
             transition: opacity 0.3s ease;
             position: relative;
             display: flex;
@@ -105,9 +103,9 @@
             align-items: center;
             gap: 1.2vh;
             animation: bounce 2.4s ease-in-out infinite;
-            cursor: pointer;
             z-index: 10;
             padding: 0 20px;
+            pointer-events: none; /* чтобы не перехватывать клики */
         }
         .scroll-text {
             color: #ffffff;
@@ -139,7 +137,7 @@
         }
 
         /* ----- ОБЩИЕ СТИЛИ ДЛЯ ЗАГОЛОВКОВ И ТЕКСТА ----- */
-        .greeting, .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title {
+        .greeting, .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title, .final-title {
             font-family: 'Zeequada', cursive;
             font-weight: 700;
             font-style: italic;
@@ -155,8 +153,13 @@
             letter-spacing: 0.12em;
             margin-bottom: 1.5rem;
         }
+        .final-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            letter-spacing: 0.06em;
+            margin-bottom: 0;
+        }
         .greeting.visible, .location-title.visible, .wishes-title.visible, .dresscode-title.visible,
-        .timer-title.visible, .vote-title.visible, .contacts-title.visible {
+        .timer-title.visible, .vote-title.visible, .contacts-title.visible, .final-title.visible {
             opacity: 1;
             transform: translateY(0);
         }
@@ -192,16 +195,19 @@
         }
         .divider.visible { opacity: 0.5; }
 
+        /* ДАТА – исправлена для мобильных */
         .big-date {
             font-family: 'Patrick Hand', cursive;
             font-weight: 400;
-            font-size: clamp(4.5rem, 14vw, 10rem);
+            font-size: clamp(3.5rem, 12vw, 10rem);
             color: #d4b99a;
             letter-spacing: 0.04em;
             line-height: 1.1;
             word-break: break-word;
             text-shadow: 2px 2px 0 rgba(212,185,154,0.15);
             display: inline-block;
+            max-width: 100%;
+            padding: 0 5px;
             opacity: 0;
             transform: translateY(40px) rotate(-0.5deg) scale(0.92);
             transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
@@ -291,6 +297,11 @@
         .map-container.visible { opacity:1; transform:scale(1); }
         .map-container iframe { width:100%; height:100%; border:0; display:block; }
 
+        /* ===== ПЯТЫЙ БЛОК (Пожелания) – уменьшен нижний отступ ===== */
+        .fifth-block {
+            padding: 4vh 5vw 2vh; /* было 4vh нижний, стало 2vh */
+        }
+
         /* ===== ГИРЛЯНДА ===== */
         .garland-wrapper {
             width: 100%;
@@ -304,6 +315,9 @@
         .garland-wrapper img { width:100%; height:auto; display:block; border-radius:24px; }
 
         /* ===== ДРЕСС-КОД ===== */
+        .dresscode-text {
+            margin: 0 auto 2.5rem; /* увеличен отступ до картинки */
+        }
         .dresscode-image {
             max-width: 400px;
             width: 100%;
@@ -409,9 +423,10 @@
             display: flex;
             justify-content: center;
             gap: 2rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             width: 100%;
         }
+
         .vote-radio-item {
             display: flex;
             flex-direction: column;
@@ -438,24 +453,29 @@
             border-color: #d4b99a;
             box-shadow: 0 0 0 8px rgba(212,185,154,0.25);
         }
-        /* Для присутствия (без картинок) — увеличиваем область клика */
-        .vote-radio-item.presence-item {
-            flex-direction: row;
-            gap: 0.8rem;
-            padding: 0.6rem 1.8rem;
-            border: 2px solid transparent;
-            border-radius: 40px;
-            transition: border-color 0.3s, background 0.3s;
+
+        .presence-group {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            width: 100%;
         }
-        .vote-radio-item.presence-item:hover { background: rgba(212,185,154,0.1); }
-        .vote-radio-item.presence-item input[type="radio"]:checked + span {
-            font-weight: 600;
-        }
-        .vote-radio-item.presence-item input[type="radio"]:checked ~ span {
-            /* можно дополнительно подсветить */
-        }
-        .vote-radio-item.presence-item span {
+        .presence-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Gravity', sans-serif;
+            font-weight: 400;
             font-size: clamp(1rem, 1.4vw, 1.2rem);
+            color: #4a4a4a;
+            cursor: pointer;
+        }
+        .presence-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #d4b99a;
+            cursor: pointer;
         }
 
         .vote-submit-btn {
@@ -493,6 +513,16 @@
         }
         .contacts-number.visible { opacity:1; transform:translateY(0); }
 
+        /* ===== ФИНАЛЬНЫЙ БЛОК ===== */
+        .final-block {
+            padding: 4vh 5vw 10vh;
+        }
+        .final-block .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 1024px) {
             section { padding: 5vh 4vw; }
@@ -500,6 +530,7 @@
             .timer-circle { width: clamp(90px, 12vw, 140px); height: clamp(90px, 12vw, 140px); font-size: clamp(2.5rem, 4vw, 4.2rem); }
             .vote-radio-item img { width: 120px; height: 120px; }
             .vote-radio-group { gap: 1.5rem; }
+            .fifth-block { padding: 4vh 4vw 2vh; }
         }
         @media (max-width: 768px) {
             section { padding: 4vh 3vw; }
@@ -507,35 +538,48 @@
             .timer-circle { width: clamp(75px, 12vw, 110px); height: clamp(75px, 12vw, 110px); font-size: clamp(2rem, 3.5vw, 3rem); }
             .vote-radio-item img { width: 100px; height: 100px; }
             .vote-radio-group { gap: 1.2rem; }
-            .vote-radio-item.presence-item { padding: 0.4rem 1.2rem; }
-            .gathering-text { white-space: normal; }
+            .presence-group { gap: 1.5rem; }
+            .final-title { font-size: clamp(2.5rem, 7vw, 4.5rem); }
+            .fifth-block { padding: 3vh 3vw 1.5vh; }
+        }
+        @media (max-width: 600px) {
+            .vote-radio-group { flex-wrap: nowrap; gap: 1rem; }
+            .vote-radio-item img { width: 80px; height: 80px; }
+            .presence-group { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
+            .big-date { font-size: clamp(2.8rem, 10vw, 4rem); } /* дополнительно уменьшаем дату */
         }
         @media (max-width: 480px) {
             section { padding: 3vh 3vw; }
             .container { max-width: 380px; }
             .timer-circle { width: clamp(60px, 14vw, 80px); height: clamp(60px, 14vw, 80px); font-size: clamp(1.6rem, 3.5vw, 2.2rem); border-width: 2px; }
-            .vote-radio-item img { width: 80px; height: 80px; }
-            .vote-radio-group { gap: 1rem; }
-            .vote-radio-item.presence-item { padding: 0.3rem 1rem; }
+            .vote-radio-item img { width: 70px; height: 70px; }
+            .vote-radio-group { gap: 0.8rem; }
+            .presence-group { gap: 0.8rem; }
             .contacts-number { font-size: clamp(1.2rem, 4vw, 1.6rem); padding: 0.4rem 1rem; }
             .garland-wrapper img { border-radius: 16px; }
+            .final-title { font-size: clamp(2rem, 6vw, 3rem); }
+            .big-date { font-size: clamp(2.5rem, 9vw, 3.5rem); }
+            .fifth-block { padding: 2vh 3vw 1vh; }
         }
         @media (max-width: 360px) {
             .timer-circle { width: 50px; height: 50px; font-size: 1.2rem; border-width: 1.5px; }
             .vote-radio-item img { width: 60px; height: 60px; }
             .timer-container { gap: 0.8rem; }
-            .vote-radio-item.presence-item { font-size: 0.9rem; padding: 0.2rem 0.8rem; }
+            .vote-radio-group { gap: 0.5rem; }
+            .final-title { font-size: 1.8rem; }
+            .big-date { font-size: clamp(2rem, 8vw, 2.8rem); }
         }
         @media (min-width: 1400px) {
             .container { max-width: 900px; }
             .timer-circle { width: 180px; height: 180px; font-size: 5.5rem; border-width: 3px; }
             .vote-radio-item img { width: 160px; height: 160px; }
+            .final-title { font-size: 6.5rem; }
         }
 
         /* Тёмная тема */
         @media (prefers-color-scheme: dark) {
             body { background: #2a201c; }
-            .greeting, .location-title, .gathering-text, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title { color: #e0d0c0; }
+            .greeting, .location-title, .gathering-text, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title, .final-title { color: #e0d0c0; }
             .invitation-text, .wishes-text, .dresscode-text, .location-address, .contacts-text, .timer-label, .vote-form label, .vote-radio-item, .contacts-number { color: #c0b0a0; }
             .location-name { color: #f0e0d0; }
             .divider { background: #8a7a6a; }
@@ -545,12 +589,11 @@
             .vote-form input[type="text"] { background: rgba(255,255,255,0.1); color: #e0d0c0; border-color: #6a5a4a; }
             .vote-form input[type="text"]:focus { border-color: #c4a88a; }
             .vote-radio-item input[type="radio"]:checked + img { border-color: #c4a88a; box-shadow: 0 0 0 8px rgba(196,168,138,0.25); }
-            .vote-radio-item.presence-item input[type="radio"]:checked + span { color: #e0d0c0; }
-            .vote-radio-item.presence-item:hover { background: rgba(196,168,138,0.1); }
             .vote-submit-btn { background: #8a7a6a; color: #1a1a1a; }
             .vote-submit-btn:hover { background: #a09080; }
             .map-container { background: #3a2a20; }
             .contacts-number { border-color: #6a5a4a; background: rgba(255,255,255,0.05); }
+            .presence-item input[type="radio"] { accent-color: #c4a88a; }
         }
     </style>
 </head>
@@ -558,7 +601,7 @@
 
     <!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
     <section class="first-screen" id="firstScreen">
-        <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-indicator">
             <span class="scroll-text">Листайте вниз</span>
             <div class="scroll-arrow"></div>
         </div>
@@ -604,8 +647,8 @@
         </div>
     </section>
 
-    <!-- ===== ПЯТЫЙ БЛОК (Пожелания) ===== -->
-    <section id="fifthBlock">
+    <!-- ===== ПЯТЫЙ БЛОК (Пожелания) – уменьшен отступ снизу ===== -->
+    <section class="fifth-block" id="fifthBlock">
         <div class="container">
             <h2 class="wishes-title" id="wishesTitle">Пожелания</h2>
             <p class="wishes-text" id="wishesText">
@@ -677,14 +720,14 @@
                 <input type="text" id="fullName" name="fullName" placeholder="Например, Анна Иванова" required />
 
                 <label>Вы планируете быть с нами?</label>
-                <div class="vote-radio-group">
-                    <label class="vote-radio-item presence-item">
+                <div class="presence-group">
+                    <label class="presence-item">
                         <input type="radio" name="presence" value="yes" />
-                        <span>Да, обязательно</span>
+                        Да, обязательно
                     </label>
-                    <label class="vote-radio-item presence-item">
+                    <label class="presence-item">
                         <input type="radio" name="presence" value="no" />
-                        <span>Нет, не смогу</span>
+                        Нет, не смогу
                     </label>
                 </div>
 
@@ -718,32 +761,16 @@
         </div>
     </section>
 
+    <!-- ===== ОДИННАДЦАТЫЙ БЛОК (Финальный) ===== -->
+    <section class="final-block" id="finalBlock">
+        <div class="container">
+            <h2 class="final-title" id="finalTitle">Мы очень Вас ждём !</h2>
+        </div>
+    </section>
+
     <script>
         (function() {
-            // Прокрутка по клику на первом экране
-            const firstScreen = document.getElementById('firstScreen');
-            const scrollIndicator = document.getElementById('scrollIndicator');
-            const secondBlock = document.getElementById('secondBlock');
-
-            function scrollToSecond() {
-                secondBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            if (firstScreen && secondBlock) {
-                firstScreen.addEventListener('click', scrollToSecond);
-            }
-            if (scrollIndicator && secondBlock) {
-                scrollIndicator.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    scrollToSecond();
-                });
-            }
-
-            // --- ОБЩИЙ НАБЛЮДАТЕЛЬ для всех элементов с классами .visible ---
-            // Мы будем использовать IntersectionObserver для каждого элемента отдельно,
-            // но для простоты создадим один наблюдатель, который будет следить за всеми
-            // элементами, которые должны появиться при полной видимости (threshold: 1.0)
-            // и для ранних блоков (threshold: 0.15) сделаем отдельно.
-
+            // --- Анимация появления при скролле ---
             // Ранние блоки (частичная видимость) – второй и третий блоки
             const earlyElements = [
                 document.getElementById('greeting'),
@@ -758,14 +785,11 @@
                 const earlyObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            // Добавляем класс visible всем ранним элементам
                             earlyElements.forEach(el => el.classList.add('visible'));
                             earlyObserver.disconnect();
                         }
                     });
                 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-
-                // Начинаем наблюдать за первым элементом (greeting)
                 if (earlyElements[0]) earlyObserver.observe(earlyElements[0]);
             } else {
                 earlyElements.forEach(el => el.classList.add('visible'));
@@ -790,16 +814,15 @@
                 document.getElementById('voteForm'),
                 document.getElementById('contactsTitle'),
                 document.getElementById('contactsText'),
-                document.getElementById('contactsNumber')
+                document.getElementById('contactsNumber'),
+                document.getElementById('finalTitle')
             ].filter(el => el !== null);
 
-            // Функция для добавления visible всем элементам
             function showAllLate() {
                 lateElements.forEach(el => el.classList.add('visible'));
             }
 
             if (lateElements.length > 0 && 'IntersectionObserver' in window) {
-                // Наблюдаем за первым элементом из списка (locationTitle)
                 const anchor = lateElements[0];
                 const lateObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
@@ -809,7 +832,6 @@
                         }
                     });
                 }, { threshold: 1.0, rootMargin: '0px 0px 0px 0px' });
-
                 if (anchor) lateObserver.observe(anchor);
             } else {
                 showAllLate();
