@@ -94,15 +94,15 @@
         }
         .first-screen:hover { opacity: 0.92; }
 
-        /* Индикатор прокрутки — строго по центру */
+        /* Индикатор прокрутки — теперь точно по центру */
         .scroll-indicator {
             position: absolute;
             bottom: 4vh;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.8rem;
             white-space: nowrap;
             animation: bounce 2.4s ease-in-out infinite;
@@ -131,17 +131,16 @@
             animation: arrowBounce 2.4s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
             flex-shrink: 0;
-            margin: 0;
-            padding: 0;
         }
         @media (max-width: 480px) {
             .scroll-indicator { gap: 0.5rem; }
             .scroll-text { font-size: 0.9rem; letter-spacing: 0.15em; }
             .scroll-arrow { width: 20px; height: 20px; border-width: 2.5px; }
         }
+
         @keyframes bounce {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
         }
         @keyframes arrowBounce {
             0%,100% { transform: rotate(45deg) translate(0,0); opacity:0.8; }
@@ -760,6 +759,7 @@
 
     <script>
         (function() {
+            // --- Анимация появления элементов при прокрутке ---
             const animatedElements = document.querySelectorAll('.fade-up, .fade-scale');
 
             if (animatedElements.length > 0 && 'IntersectionObserver' in window) {
@@ -780,6 +780,7 @@
                 animatedElements.forEach(el => el.classList.add('visible'));
             }
 
+            // --- Таймер ---
             function updateTimer() {
                 const target = new Date('2026-10-10T17:00:00').getTime();
                 const now = new Date().getTime();
@@ -814,6 +815,7 @@
             updateTimer();
             setInterval(updateTimer, 1000);
 
+            // --- Обработка формы ---
             const form = document.getElementById('voteForm');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -840,6 +842,7 @@
                 form.reset();
             });
 
+            // Проверка загрузки изображений
             const images = ['главная.png', 'облако.png', 'гирлянда.png', 'шарики.png', 'вопрос.png', 'мальчик.png', 'девочка.png'];
             images.forEach(src => {
                 const img = new Image();
