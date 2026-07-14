@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
-    <meta name="format-detection" content="telephone=no" /> <!-- отключаем автоопределение телефонов -->
+    <meta name="format-detection" content="telephone=no" />
     <title>Приглашение</title>
     <style>
         @font-face {
@@ -103,7 +103,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             white-space: nowrap;
             animation: bounce 2.4s ease-in-out infinite;
             z-index: 10;
@@ -126,13 +126,16 @@
             border-right: 3px solid #ffffff;
             border-bottom: 3px solid #ffffff;
             transform: rotate(45deg);
+            transform-origin: center;
             opacity: 0.85;
             animation: arrowBounce 2.4s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
             flex-shrink: 0;
+            margin: 0;
+            padding: 0;
         }
         @media (max-width: 480px) {
-            .scroll-indicator { gap: 0.6rem; }
+            .scroll-indicator { gap: 0.5rem; }
             .scroll-text { font-size: 0.9rem; letter-spacing: 0.15em; }
             .scroll-arrow { width: 20px; height: 20px; border-width: 2.5px; }
         }
@@ -499,7 +502,7 @@
         .final-block { padding: 4vh 5vw 10vh; }
         .final-block .container { display: flex; flex-direction: column; align-items: center; }
 
-        /* ===== АДАПТИВНОСТЬ (увеличены фото мальчика и девочки) ===== */
+        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 1024px) {
             section { padding: 5vh 4vw; }
             .container { max-width: 650px; }
@@ -578,7 +581,6 @@
             .map-container { max-width: 500px; }
         }
 
-        /* Тёмная тема */
         @media (prefers-color-scheme: dark) {
             body { background: #2a201c; }
             .greeting, .location-title, .gathering-text, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title, .final-title { color: #e0d0c0; }
@@ -758,7 +760,6 @@
 
     <script>
         (function() {
-            // --- Анимация появления элементов при прокрутке ---
             const animatedElements = document.querySelectorAll('.fade-up, .fade-scale');
 
             if (animatedElements.length > 0 && 'IntersectionObserver' in window) {
@@ -779,7 +780,6 @@
                 animatedElements.forEach(el => el.classList.add('visible'));
             }
 
-            // --- Таймер ---
             function updateTimer() {
                 const target = new Date('2026-10-10T17:00:00').getTime();
                 const now = new Date().getTime();
@@ -814,7 +814,6 @@
             updateTimer();
             setInterval(updateTimer, 1000);
 
-            // --- Обработка формы ---
             const form = document.getElementById('voteForm');
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -841,7 +840,6 @@
                 form.reset();
             });
 
-            // Проверка загрузки изображений
             const images = ['главная.png', 'облако.png', 'гирлянда.png', 'шарики.png', 'вопрос.png', 'мальчик.png', 'девочка.png'];
             images.forEach(src => {
                 const img = new Image();
