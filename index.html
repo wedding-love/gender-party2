@@ -42,7 +42,8 @@
             font-display: swap;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+        /* Подключаем альтернативный маркерный шрифт для даты */
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
 
         * {
             margin: 0;
@@ -93,15 +94,15 @@
         }
         .first-screen:hover { opacity: 0.92; }
 
+        /* Индикатор прокрутки — теперь в одну строку */
         .scroll-indicator {
             position: absolute;
             bottom: 4vh;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 1.2vh;
+            gap: 0.8rem;
             animation: bounce 2.4s ease-in-out infinite;
             z-index: 10;
             padding: 0 20px;
@@ -118,22 +119,23 @@
             opacity: 0.95;
         }
         .scroll-arrow {
-            width: 26px;
-            height: 26px;
+            width: 20px;
+            height: 20px;
             border-right: 2.5px solid #ffffff;
             border-bottom: 2.5px solid #ffffff;
             transform: rotate(45deg);
             opacity: 0.85;
             animation: arrowBounce 2.4s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+            flex-shrink: 0;
         }
         @keyframes bounce {
             0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-12px); }
+            50% { transform: translateX(-50%) translateY(-8px); }
         }
         @keyframes arrowBounce {
             0%,100% { transform: rotate(45deg) translate(0,0); opacity:0.8; }
-            50% { transform: rotate(45deg) translate(6px,6px); opacity:1; }
+            50% { transform: rotate(45deg) translate(4px,4px); opacity:1; }
         }
 
         /* ----- БАЗОВЫЕ АНИМАЦИИ ДЛЯ ЭЛЕМЕНТОВ ----- */
@@ -165,7 +167,7 @@
             font-size: clamp(2.2rem, 6vw, 4.2rem);
             color: #4a4a4a;
             letter-spacing: 0.08em;
-            margin-top: 2rem;      /* дополнительный отступ сверху */
+            margin-top: 4rem;      /* увеличенный отступ сверху */
             margin-bottom: 1.8rem;
             line-height: 1.2;
             text-transform: uppercase;
@@ -210,10 +212,10 @@
             border-radius: 4px;
         }
 
-        /* ДАТА – крупнее и без переноса */
+        /* ДАТА — шрифт Caveat (маркерный) */
         .big-date {
-            font-family: 'Patrick Hand', cursive;
-            font-weight: 400;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
             font-size: clamp(4.5rem, 14vw, 11rem);
             color: #d4b99a;
             letter-spacing: 0.04em;
@@ -258,8 +260,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
-            font-family: 'Patrick Hand', cursive;
-            font-weight: 400;
+            font-family: 'Caveat', cursive;
+            font-weight: 700;
             font-size: clamp(4rem, 12vw, 8rem);
             color: #ffffff;
             text-shadow: 0 4px 20px rgba(0,0,0,0.25);
@@ -292,9 +294,9 @@
         }
         .map-container iframe { width:100%; height:100%; border:0; display:block; }
 
-        /* ===== ПЯТЫЙ БЛОК (Пожелания) – увеличен отступ сверху ===== */
+        /* ===== ПЯТЫЙ БЛОК (Пожелания) ===== */
         .fifth-block {
-            padding: 8vh 5vw 2vh; /* было 4vh, стало 8vh – больше отступ от карты */
+            padding: 8vh 5vw 2vh;
         }
 
         /* ===== ГИРЛЯНДА ===== */
@@ -413,9 +415,10 @@
         }
         .vote-radio-item:hover { transform:scale(1.05); }
         .vote-radio-item input[type="radio"] { display: none; }
+        /* Увеличенные фото мальчика и девочки */
         .vote-radio-item img {
-            width: 140px;
-            height: 140px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid transparent;
@@ -473,6 +476,9 @@
         .vote-submit-btn:active { transform:scale(0.97); }
 
         /* ===== КОНТАКТЫ ===== */
+        .contacts-block {
+            padding-top: 10vh; /* увеличенный отступ сверху */
+        }
         .contacts-number {
             font-family: 'Gravity', sans-serif;
             font-weight: 400;
@@ -496,23 +502,25 @@
             section { padding: 5vh 4vw; }
             .container { max-width: 650px; }
             .timer-circle { width: clamp(90px, 12vw, 140px); height: clamp(90px, 12vw, 140px); font-size: clamp(2.5rem, 4vw, 4.2rem); }
-            .vote-radio-item img { width: 120px; height: 120px; }
+            .vote-radio-item img { width: 150px; height: 150px; }
             .vote-radio-group { gap: 1.5rem; }
             .fifth-block { padding: 6vh 4vw 2vh; }
+            .contacts-block { padding-top: 8vh; }
         }
         @media (max-width: 768px) {
             section { padding: 4vh 3vw; }
             .container { max-width: 500px; }
             .timer-circle { width: clamp(75px, 12vw, 110px); height: clamp(75px, 12vw, 110px); font-size: clamp(2rem, 3.5vw, 3rem); }
-            .vote-radio-item img { width: 100px; height: 100px; }
+            .vote-radio-item img { width: 120px; height: 120px; }
             .vote-radio-group { gap: 1.2rem; }
             .presence-group { gap: 1.5rem; }
             .final-title { font-size: clamp(2.5rem, 7vw, 4.5rem); }
             .fifth-block { padding: 5vh 3vw 1.5vh; }
+            .contacts-block { padding-top: 6vh; }
         }
         @media (max-width: 600px) {
             .vote-radio-group { flex-wrap: nowrap; gap: 0.8rem; }
-            .vote-radio-item img { width: 80px; height: 80px; }
+            .vote-radio-item img { width: 100px; height: 100px; }
             .presence-group { flex-direction: row; flex-wrap: wrap; gap: 0.8rem; }
             .big-date { font-size: clamp(4rem, 12vw, 6rem); white-space: nowrap; }
             .presence-item { padding: 0.4rem 0.8rem; }
@@ -521,7 +529,7 @@
             section { padding: 3vh 3vw; }
             .container { max-width: 380px; }
             .timer-circle { width: clamp(60px, 14vw, 80px); height: clamp(60px, 14vw, 80px); font-size: clamp(1.6rem, 3.5vw, 2.2rem); border-width: 2px; }
-            .vote-radio-item img { width: 70px; height: 70px; }
+            .vote-radio-item img { width: 80px; height: 80px; }
             .vote-radio-group { gap: 0.5rem; }
             .presence-group { gap: 0.5rem; }
             .contacts-number { font-size: clamp(1.2rem, 4vw, 1.6rem); padding: 0.4rem 1rem; }
@@ -531,11 +539,12 @@
             .fifth-block { padding: 4vh 3vw 1vh; }
             .presence-item { padding: 0.3rem 0.6rem; font-size: 0.95rem; }
             .vote-form input[type="text"] { font-size: 0.9rem; padding: 0.6rem 1rem; }
-            .greeting { margin-top: 1rem; }
+            .greeting { margin-top: 2rem; }
+            .contacts-block { padding-top: 4vh; }
         }
         @media (max-width: 360px) {
             .timer-circle { width: 50px; height: 50px; font-size: 1.2rem; border-width: 1.5px; }
-            .vote-radio-item img { width: 60px; height: 60px; }
+            .vote-radio-item img { width: 70px; height: 70px; }
             .timer-container { gap: 0.5rem; }
             .vote-radio-group { gap: 0.3rem; }
             .final-title { font-size: 1.8rem; }
@@ -546,7 +555,7 @@
         }
         @media (max-width: 320px) {
             .timer-circle { width: 42px; height: 42px; font-size: 1rem; }
-            .vote-radio-item img { width: 50px; height: 50px; }
+            .vote-radio-item img { width: 60px; height: 60px; }
             .vote-radio-item span { font-size: 0.8rem; }
             .greeting { font-size: 1.6rem; }
             .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title { font-size: 1.4rem; }
@@ -557,7 +566,7 @@
         @media (min-width: 1400px) {
             .container { max-width: 900px; }
             .timer-circle { width: 180px; height: 180px; font-size: 5.5rem; border-width: 3px; }
-            .vote-radio-item img { width: 160px; height: 160px; }
+            .vote-radio-item img { width: 200px; height: 200px; }
             .final-title { font-size: 6.5rem; }
         }
 
@@ -621,8 +630,9 @@
             <div class="location-name fade-up">Роял Холл</div>
             <div class="location-address fade-up">д. Чуденичи, Лесная ул., 2А</div>
             <div class="map-container fade-scale">
+                <!-- Яндекс.Карты вместо Google -->
                 <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.5361000000003!2d27.789486!3d54.1378565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbb09bca0e2447%3A0x911c95a0b585f6d7!2z0KPQttCw0LTQsNGB0LDRkdCx0LAg0KHQsNC00YzQsdCwIFJveWFsIEhhbGw!5e0!3m2!1sru!2sby!4v1742034567890!5m2!1sru!2sby" 
+                    src="https://yandex.by/maps/org/usadba_royal_hall/1400112911/?ll=27.793345%2C54.137742&z=16.11&output=embed"
                     allowfullscreen>
                 </iframe>
             </div>
@@ -724,7 +734,7 @@
     </section>
 
     <!-- ===== ДЕСЯТЫЙ БЛОК (Контакты) ===== -->
-    <section id="tenthBlock">
+    <section class="contacts-block" id="tenthBlock">
         <div class="container">
             <h2 class="contacts-title fade-up">Контакты</h2>
             <p class="contacts-text fade-up">По всем вопросам вы можете связаться с нами:</p>
@@ -749,7 +759,6 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
-                            // Можно отключить наблюдение после появления, чтобы сэкономить ресурсы
                             observer.unobserve(entry.target);
                         }
                     });
@@ -760,7 +769,6 @@
 
                 animatedElements.forEach(el => observer.observe(el));
             } else {
-                // Fallback для старых браузеров – показываем всё сразу
                 animatedElements.forEach(el => el.classList.add('visible'));
             }
 
