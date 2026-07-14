@@ -94,17 +94,17 @@
         }
         .first-screen:hover { opacity: 0.92; }
 
-        /* Индикатор прокрутки — теперь текст и стрелка вместе по центру */
+        /* Индикатор прокрутки — теперь текст сверху, стрелка снизу, оба по центру */
         .scroll-indicator {
             position: absolute;
             bottom: 4vh;
             left: 0;
             right: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            gap: 0.8rem;
-            white-space: nowrap;
+            justify-content: center;
+            gap: 0.6rem;
             animation: bounce 2.4s ease-in-out infinite;
             z-index: 10;
             padding: 0 20px;
@@ -131,8 +131,6 @@
             animation: arrowBounce 2.4s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
             flex-shrink: 0;
-            margin: 0;
-            padding: 0;
         }
         @media (max-width: 480px) {
             .scroll-indicator { gap: 0.4rem; }
@@ -140,7 +138,7 @@
             .scroll-arrow { width: 18px; height: 18px; border-width: 2px; }
         }
 
-        /* Анимация только по вертикали — центрирование не сбивается */
+        /* Анимация подпрыгивания всей группы */
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
