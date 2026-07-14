@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" /> <!-- отключаем автоопределение телефонов -->
     <title>Приглашение</title>
     <style>
         @font-face {
@@ -93,15 +94,15 @@
         }
         .first-screen:hover { opacity: 0.92; }
 
-        /* Индикатор прокрутки — строго по центру, увеличенный шрифт */
+        /* Индикатор прокрутки — строго по центру */
         .scroll-indicator {
             position: absolute;
             bottom: 4vh;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 0;
+            right: 0;
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             gap: 1rem;
             white-space: nowrap;
             animation: bounce 2.4s ease-in-out infinite;
@@ -136,8 +137,8 @@
             .scroll-arrow { width: 20px; height: 20px; border-width: 2.5px; }
         }
         @keyframes bounce {
-            0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         @keyframes arrowBounce {
             0%,100% { transform: rotate(45deg) translate(0,0); opacity:0.8; }
@@ -418,7 +419,6 @@
         }
         .vote-radio-item:hover { transform:scale(1.05); }
         .vote-radio-item input[type="radio"] { display: none; }
-        /* Увеличенные фото мальчика и девочки */
         .vote-radio-item img {
             width: 220px;
             height: 220px;
@@ -484,7 +484,7 @@
             font-family: 'Gravity', sans-serif;
             font-weight: 400;
             font-size: clamp(1.4rem, 2.5vw, 2.2rem);
-            color: #3a3a3a !important; /* чёрный */
+            color: #3a3a3a !important;
             letter-spacing: 0.06em;
             margin-top: 0.5rem;
             display: inline-block;
@@ -492,7 +492,7 @@
             border: 2px solid #d4c8b8;
             border-radius: 50px;
             background: rgba(255,255,255,0.4);
-            text-decoration: none !important; /* без подчёркивания */
+            text-decoration: none !important;
         }
 
         /* ===== ФИНАЛЬНЫЙ БЛОК ===== */
@@ -524,7 +524,7 @@
         }
         @media (max-width: 600px) {
             .vote-radio-group { flex-wrap: nowrap; gap: 0.8rem; }
-            .vote-radio-item img { width: 140px; height: 140px; }
+            .vote-radio-item img { width: 150px; height: 150px; }
             .presence-group { flex-direction: row; flex-wrap: wrap; gap: 0.8rem; }
             .big-date { font-size: clamp(4rem, 12vw, 6rem); white-space: nowrap; }
             .presence-item { padding: 0.4rem 0.8rem; }
@@ -533,7 +533,7 @@
             section { padding: 3vh 3vw; }
             .container { max-width: 380px; }
             .timer-circle { width: clamp(60px, 14vw, 80px); height: clamp(60px, 14vw, 80px); font-size: clamp(1.6rem, 3.5vw, 2.2rem); border-width: 2px; }
-            .vote-radio-item img { width: 130px; height: 130px; }
+            .vote-radio-item img { width: 140px; height: 140px; }
             .vote-radio-group { gap: 0.5rem; }
             .presence-group { gap: 0.5rem; }
             .contacts-number { font-size: clamp(1.2rem, 4vw, 1.6rem); padding: 0.4rem 1rem; }
@@ -549,7 +549,7 @@
         }
         @media (max-width: 360px) {
             .timer-circle { width: 50px; height: 50px; font-size: 1.2rem; border-width: 1.5px; }
-            .vote-radio-item img { width: 120px; height: 120px; }
+            .vote-radio-item img { width: 130px; height: 130px; }
             .timer-container { gap: 0.5rem; }
             .vote-radio-group { gap: 0.3rem; }
             .final-title { font-size: 1.8rem; }
@@ -561,7 +561,7 @@
         }
         @media (max-width: 320px) {
             .timer-circle { width: 42px; height: 42px; font-size: 1rem; }
-            .vote-radio-item img { width: 110px; height: 110px; }
+            .vote-radio-item img { width: 120px; height: 120px; }
             .vote-radio-item span { font-size: 0.8rem; }
             .greeting { font-size: 1.6rem; }
             .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title { font-size: 1.4rem; }
