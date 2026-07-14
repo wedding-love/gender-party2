@@ -94,7 +94,7 @@
         }
         .first-screen:hover { opacity: 0.92; }
 
-        /* Индикатор прокрутки — теперь точно по центру */
+        /* Индикатор прокрутки — теперь текст и стрелка вместе по центру */
         .scroll-indicator {
             position: absolute;
             bottom: 4vh;
@@ -131,11 +131,13 @@
             animation: arrowBounce 2.4s ease-in-out infinite;
             filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
             flex-shrink: 0;
+            margin: 0;
+            padding: 0;
         }
         @media (max-width: 480px) {
-            .scroll-indicator { gap: 0.5rem; }
-            .scroll-text { font-size: 0.9rem; letter-spacing: 0.15em; }
-            .scroll-arrow { width: 20px; height: 20px; border-width: 2.5px; }
+            .scroll-indicator { gap: 0.4rem; }
+            .scroll-text { font-size: 0.85rem; letter-spacing: 0.15em; }
+            .scroll-arrow { width: 18px; height: 18px; border-width: 2px; }
         }
 
         /* Анимация только по вертикали — центрирование не сбивается */
@@ -145,7 +147,7 @@
         }
         @keyframes arrowBounce {
             0%,100% { transform: rotate(45deg) translate(0,0); opacity:0.8; }
-            50% { transform: rotate(45deg) translate(5px,5px); opacity:1; }
+            50% { transform: rotate(45deg) translate(4px,4px); opacity:1; }
         }
 
         /* ----- БАЗОВЫЕ АНИМАЦИИ — замедлены до 1.2s ----- */
