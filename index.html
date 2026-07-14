@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+    <title>Приглашение</title>
+    <style>
+        @font-face {
+            font-family: 'Zeequada';
+            src: url('Zeequada.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Zeequada';
+            src: url('Zeequada.ttf') format('truetype');
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gravity';
+            src: url('Gravity.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gravity';
+            src: url('Gravity.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gravity';
+            src: url('Gravity.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* СПЛОШНОЙ МОЛОЧНЫЙ ФОН */
+        body {
+            background: #fcf8f5;
+            font-family: 'Gravity', 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+            color: #3a3a3a;
+        }
+
+        section {
+            padding: 6vh 5vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            padding: 0 2vw;
+        }
+
+        /* ----- ПЕРВЫЙ ЭКРАН (фото) ----- */
+        .first-screen {
+            height: 100dvh;
+            width: 100%;
+            background: url('главная.png') center center / cover no-repeat;
+            background-color: #e8dccc;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 5vh;
+            padding: 0;
+        }
+        .first-screen:hover { opacity: 0.92; }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 4vh;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2vh;
+            animation: bounce 2.4s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 10;
+            padding: 0 20px;
+        }
+        .scroll-text {
+            color: #ffffff;
+            font-family: 'Gravity', sans-serif;
+            font-weight: 300;
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+            opacity: 0.95;
+        }
+        .scroll-arrow {
+            width: 26px;
+            height: 26px;
+            border-right: 2.5px solid #ffffff;
+            border-bottom: 2.5px solid #ffffff;
+            transform: rotate(45deg);
+            opacity: 0.85;
+            animation: arrowBounce 2.4s ease-in-out infinite;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+        }
+        @keyframes bounce {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-12px); }
+        }
+        @keyframes arrowBounce {
+            0%,100% { transform: rotate(45deg) translate(0,0); opacity:0.8; }
+            50% { transform: rotate(45deg) translate(6px,6px); opacity:1; }
+        }
+
+        /* ----- ОБЩИЕ СТИЛИ ДЛЯ ЗАГОЛОВКОВ И ТЕКСТА ----- */
+        .greeting, .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title {
+            font-family: 'Zeequada', cursive;
+            font-weight: 700;
+            font-style: italic;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .greeting { font-size: clamp(2.2rem, 6vw, 4.2rem); letter-spacing: 0.08em; margin-bottom: 1.8rem; }
+        .location-title, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title {
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            letter-spacing: 0.12em;
+            margin-bottom: 1.5rem;
+        }
+        .greeting.visible, .location-title.visible, .wishes-title.visible, .dresscode-title.visible,
+        .timer-title.visible, .vote-title.visible, .contacts-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .invitation-text, .wishes-text, .dresscode-text, .location-address, .contacts-text {
+            font-family: 'Gravity', sans-serif;
+            font-weight: 300;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+            line-height: 1.8;
+            color: #5a5a5a;
+            max-width: 600px;
+            margin: 0 auto;
+            letter-spacing: 0.04em;
+            padding: 0 5px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+        }
+        .invitation-text.visible, .wishes-text.visible, .dresscode-text.visible, .location-address.visible, .contacts-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .divider {
+            width: clamp(50px, 8vw, 80px);
+            height: 2px;
+            background: #d4c8b8;
+            margin: 0 auto 2.2rem;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.9s ease 0.4s;
+        }
+        .divider.visible { opacity: 0.5; }
+
+        .big-date {
+            font-family: 'Patrick Hand', cursive;
+            font-weight: 400;
+            font-size: clamp(4.5rem, 14vw, 10rem);
+            color: #d4b99a;
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+            word-break: break-word;
+            text-shadow: 2px 2px 0 rgba(212,185,154,0.15);
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(40px) rotate(-0.5deg) scale(0.92);
+            transition: opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s;
+        }
+        .big-date.visible { opacity: 1; transform: translateY(0) rotate(-0.5deg) scale(1); }
+
+        /* ===== СБОР ГОСТЕЙ ===== */
+        .gathering-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.1rem, 0.3vw, 0.6rem);
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .gathering-text {
+            font-family: 'Gravity', sans-serif;
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(1.8rem, 4vw, 3.2rem);
+            color: #4a4a4a;
+            letter-spacing: 0.08em;
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+            flex: 0 1 auto;
+            white-space: nowrap;
+        }
+        .gathering-text.visible { opacity: 1; transform: translateY(0); }
+        .cloud-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            flex: 0 1 400px;
+            aspect-ratio: 1/1;
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+        }
+        .cloud-wrapper.visible { opacity: 1; transform: scale(1); }
+        .cloud-wrapper img { width:100%; height:100%; object-fit:contain; display:block; }
+        .cloud-time {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-family: 'Patrick Hand', cursive;
+            font-weight: 400;
+            font-size: clamp(4rem, 12vw, 8rem);
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            letter-spacing: 0.04em;
+            line-height: 1.1;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        /* ===== МЕСТО ПРОВЕДЕНИЯ ===== */
+        .location-name {
+            font-family: 'Zeequada', cursive;
+            font-weight: 700;
+            font-style: italic;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: #2a2a2a;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease 0.1s, transform 0.9s ease 0.1s;
+        }
+        .location-name.visible { opacity: 1; transform: translateY(0); }
+
+        .map-container {
+            width: 100%;
+            max-width: 550px;
+            margin: 0 auto;
+            aspect-ratio: 1/1;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+            background: #e8e0d8;
+        }
+        .map-container.visible { opacity:1; transform:scale(1); }
+        .map-container iframe { width:100%; height:100%; border:0; display:block; }
+
+        /* ===== ГИРЛЯНДА ===== */
+        .garland-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .garland-wrapper.visible { opacity:1; transform:translateY(0); }
+        .garland-wrapper img { width:100%; height:auto; display:block; border-radius:24px; }
+
+        /* ===== ДРЕСС-КОД ===== */
+        .dresscode-image {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transform: scale(0.94) translateY(20px);
+            transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+        }
+        .dresscode-image.visible { opacity:1; transform:scale(1) translateY(0); }
+        .dresscode-image img { width:100%; height:auto; display:block; border-radius:16px; }
+
+        /* ===== ТАЙМЕР ===== */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: clamp(1.5rem, 3vw, 4rem);
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .timer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease 0.2s, transform 0.9s ease 0.2s;
+        }
+        .timer-item.visible { opacity:1; transform:translateY(0); }
+        .timer-circle {
+            width: clamp(100px, 14vw, 170px);
+            height: clamp(100px, 14vw, 170px);
+            border-radius: 50%;
+            background: transparent;
+            border: 3px solid #d4b99a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Gravity', sans-serif;
+            font-weight: 700;
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            color: #2a2a2a;
+            box-shadow: 0 0 0 0 rgba(212,185,154,0.2);
+            margin-bottom: 0.8rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timer-circle:hover { transform:scale(1.05); box-shadow:0 0 0 10px rgba(212,185,154,0.15); }
+        .timer-label {
+            font-family: 'Gravity', sans-serif;
+            font-weight: 300;
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            color: #5a5a5a;
+            letter-spacing: 0.06em;
+            text-transform: lowercase;
+        }
+        .timer-image {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transform: scale(0.94) translateY(20px);
+            transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+        }
+        .timer-image.visible { opacity:1; transform:scale(1) translateY(0); }
+        .timer-image img { width:100%; height:auto; display:block; border-radius:16px; }
+
+        /* ===== ГОЛОСОВАНИЕ ===== */
+        .vote-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+        }
+        .vote-form.visible { opacity:1; transform:translateY(0); }
+        .vote-form label {
+            font-family: 'Gravity', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1rem, 1.6vw, 1.4rem);
+            color: #4a4a4a;
+            letter-spacing: 0.04em;
+            width: 100%;
+            max-width: 500px;
+            text-align: left;
+        }
+        .vote-form input[type="text"] {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.8rem 1.2rem;
+            font-family: 'Gravity', sans-serif;
+            font-size: 1rem;
+            border: 1.5px solid #d4c8b8;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(2px);
+            transition: border-color 0.3s ease;
+            outline: none;
+        }
+        .vote-form input[type="text"]:focus { border-color:#d4b99a; }
+
+        .vote-radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .vote-radio-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-family: 'Gravity', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            color: #4a4a4a;
+        }
+        .vote-radio-item:hover { transform:scale(1.05); }
+        .vote-radio-item input[type="radio"] { display: none; }
+        .vote-radio-item img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+        .vote-radio-item input[type="radio"]:checked + img {
+            border-color: #d4b99a;
+            box-shadow: 0 0 0 8px rgba(212,185,154,0.25);
+        }
+        /* Для присутствия (без картинок) — увеличиваем область клика */
+        .vote-radio-item.presence-item {
+            flex-direction: row;
+            gap: 0.8rem;
+            padding: 0.6rem 1.8rem;
+            border: 2px solid transparent;
+            border-radius: 40px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .vote-radio-item.presence-item:hover { background: rgba(212,185,154,0.1); }
+        .vote-radio-item.presence-item input[type="radio"]:checked + span {
+            font-weight: 600;
+        }
+        .vote-radio-item.presence-item input[type="radio"]:checked ~ span {
+            /* можно дополнительно подсветить */
+        }
+        .vote-radio-item.presence-item span {
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+        }
+
+        .vote-submit-btn {
+            background: #d4b99a;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 40px;
+            font-family: 'Gravity', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 16px rgba(212,185,154,0.3);
+        }
+        .vote-submit-btn:hover { background:#c4a88a; transform:translateY(-2px); }
+        .vote-submit-btn:active { transform:scale(0.97); }
+
+        /* ===== КОНТАКТЫ ===== */
+        .contacts-number {
+            font-family: 'Gravity', sans-serif;
+            font-weight: 400;
+            font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+            color: #3a3a3a;
+            letter-spacing: 0.06em;
+            margin-top: 0.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.9s ease 0.3s, transform 0.9s ease 0.3s;
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #d4c8b8;
+            border-radius: 50px;
+            background: rgba(255,255,255,0.4);
+        }
+        .contacts-number.visible { opacity:1; transform:translateY(0); }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1024px) {
+            section { padding: 5vh 4vw; }
+            .container { max-width: 650px; }
+            .timer-circle { width: clamp(90px, 12vw, 140px); height: clamp(90px, 12vw, 140px); font-size: clamp(2.5rem, 4vw, 4.2rem); }
+            .vote-radio-item img { width: 120px; height: 120px; }
+            .vote-radio-group { gap: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            section { padding: 4vh 3vw; }
+            .container { max-width: 500px; }
+            .timer-circle { width: clamp(75px, 12vw, 110px); height: clamp(75px, 12vw, 110px); font-size: clamp(2rem, 3.5vw, 3rem); }
+            .vote-radio-item img { width: 100px; height: 100px; }
+            .vote-radio-group { gap: 1.2rem; }
+            .vote-radio-item.presence-item { padding: 0.4rem 1.2rem; }
+            .gathering-text { white-space: normal; }
+        }
+        @media (max-width: 480px) {
+            section { padding: 3vh 3vw; }
+            .container { max-width: 380px; }
+            .timer-circle { width: clamp(60px, 14vw, 80px); height: clamp(60px, 14vw, 80px); font-size: clamp(1.6rem, 3.5vw, 2.2rem); border-width: 2px; }
+            .vote-radio-item img { width: 80px; height: 80px; }
+            .vote-radio-group { gap: 1rem; }
+            .vote-radio-item.presence-item { padding: 0.3rem 1rem; }
+            .contacts-number { font-size: clamp(1.2rem, 4vw, 1.6rem); padding: 0.4rem 1rem; }
+            .garland-wrapper img { border-radius: 16px; }
+        }
+        @media (max-width: 360px) {
+            .timer-circle { width: 50px; height: 50px; font-size: 1.2rem; border-width: 1.5px; }
+            .vote-radio-item img { width: 60px; height: 60px; }
+            .timer-container { gap: 0.8rem; }
+            .vote-radio-item.presence-item { font-size: 0.9rem; padding: 0.2rem 0.8rem; }
+        }
+        @media (min-width: 1400px) {
+            .container { max-width: 900px; }
+            .timer-circle { width: 180px; height: 180px; font-size: 5.5rem; border-width: 3px; }
+            .vote-radio-item img { width: 160px; height: 160px; }
+        }
+
+        /* Тёмная тема */
+        @media (prefers-color-scheme: dark) {
+            body { background: #2a201c; }
+            .greeting, .location-title, .gathering-text, .wishes-title, .dresscode-title, .timer-title, .vote-title, .contacts-title { color: #e0d0c0; }
+            .invitation-text, .wishes-text, .dresscode-text, .location-address, .contacts-text, .timer-label, .vote-form label, .vote-radio-item, .contacts-number { color: #c0b0a0; }
+            .location-name { color: #f0e0d0; }
+            .divider { background: #8a7a6a; }
+            .big-date { color: #c4a88a; }
+            .timer-circle { border-color: #c4a88a; color: #e0d0c0; }
+            .timer-circle:hover { box-shadow: 0 0 0 10px rgba(196,168,138,0.15); }
+            .vote-form input[type="text"] { background: rgba(255,255,255,0.1); color: #e0d0c0; border-color: #6a5a4a; }
+            .vote-form input[type="text"]:focus { border-color: #c4a88a; }
+            .vote-radio-item input[type="radio"]:checked + img { border-color: #c4a88a; box-shadow: 0 0 0 8px rgba(196,168,138,0.25); }
+            .vote-radio-item.presence-item input[type="radio"]:checked + span { color: #e0d0c0; }
+            .vote-radio-item.presence-item:hover { background: rgba(196,168,138,0.1); }
+            .vote-submit-btn { background: #8a7a6a; color: #1a1a1a; }
+            .vote-submit-btn:hover { background: #a09080; }
+            .map-container { background: #3a2a20; }
+            .contacts-number { border-color: #6a5a4a; background: rgba(255,255,255,0.05); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ПЕРВЫЙ ЭКРАН ===== -->
+    <section class="first-screen" id="firstScreen">
+        <div class="scroll-indicator" id="scrollIndicator">
+            <span class="scroll-text">Листайте вниз</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ===== ВТОРОЙ БЛОК (приглашение) ===== -->
+    <section id="secondBlock">
+        <div class="container">
+            <h1 class="greeting" id="greeting">Дорогие родные и друзья</h1>
+            <p class="invitation-text" id="invitationText">
+                Приглашаем вас разделить с нами этот особенный день, наполненный теплом, 
+                радостью и искренними эмоциями. Мы будем счастливы видеть каждого из вас 
+                в этот важный для нас момент.
+            </p>
+            <div class="divider" id="divider"></div>
+            <div class="big-date" id="bigDate">10.10.2026</div>
+        </div>
+    </section>
+
+    <!-- ===== ТРЕТИЙ БЛОК (Сбор гостей) ===== -->
+    <section id="thirdBlock">
+        <div class="container gathering-wrapper">
+            <span class="gathering-text" id="gatheringText">Сбор гостей</span>
+            <div class="cloud-wrapper" id="cloudWrapper">
+                <img src="облако.png" alt="Облако" />
+                <div class="cloud-time">17.00</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ЧЕТВЁРТЫЙ БЛОК (Место проведения) ===== -->
+    <section id="fourthBlock">
+        <div class="container">
+            <h2 class="location-title" id="locationTitle">Место проведения</h2>
+            <div class="location-name" id="locationName">Роял Холл</div>
+            <div class="location-address" id="locationAddress">д. Чуденичи, Лесная ул., 2А</div>
+            <div class="map-container" id="mapContainer">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.5361000000003!2d27.789486!3d54.1378565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbb09bca0e2447%3A0x911c95a0b585f6d7!2z0KPQttCw0LTQsNGB0LDRkdCx0LAg0KHQsNC00YzQsdCwIFJveWFsIEhhbGw!5e0!3m2!1sru!2sby!4v1742034567890!5m2!1sru!2sby" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ПЯТЫЙ БЛОК (Пожелания) ===== -->
+    <section id="fifthBlock">
+        <div class="container">
+            <h2 class="wishes-title" id="wishesTitle">Пожелания</h2>
+            <p class="wishes-text" id="wishesText">
+                Пусть этот день станет началом вашей самой красивой истории, 
+                наполненной любовью, смехом и бесконечным счастьем. 
+                Мы желаем вам быть друг для друга самой надёжной опорой 
+                и вдохновением на каждом шагу.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== ШЕСТОЙ БЛОК (Гирлянда) ===== -->
+    <section id="sixthBlock">
+        <div class="garland-wrapper" id="garlandWrapper">
+            <img src="гирлянда.png" alt="Гирлянда" />
+        </div>
+    </section>
+
+    <!-- ===== СЕДЬМОЙ БЛОК (Дресс-код) ===== -->
+    <section id="seventhBlock">
+        <div class="container">
+            <h2 class="dresscode-title" id="dresscodeTitle">Дресс-код</h2>
+            <p class="dresscode-text" id="dresscodeText">
+                Просим вас поддержать нас и прийти в том цвете, 
+                который, по вашему ощущению, соответствует полу нашего будущего ребёнка. 
+                Пусть ваши наряды станут частью нашего маленького чуда!
+            </p>
+            <div class="dresscode-image" id="dresscodeImage">
+                <img src="шарики.png" alt="Шарики" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ВОСЬМОЙ БЛОК (Таймер + Вопрос) ===== -->
+    <section id="eighthBlock">
+        <div class="container">
+            <h2 class="timer-title" id="timerTitle">Мы узнаем пол нашего малыша через...</h2>
+            <div class="timer-container" id="timerContainer">
+                <div class="timer-item" id="daysItem">
+                    <div class="timer-circle" id="days">00</div>
+                    <div class="timer-label"><span id="daysLabel">дней</span></div>
+                </div>
+                <div class="timer-item" id="hoursItem">
+                    <div class="timer-circle" id="hours">00</div>
+                    <div class="timer-label"><span id="hoursLabel">часов</span></div>
+                </div>
+                <div class="timer-item" id="minutesItem">
+                    <div class="timer-circle" id="minutes">00</div>
+                    <div class="timer-label"><span id="minutesLabel">минут</span></div>
+                </div>
+                <div class="timer-item" id="secondsItem">
+                    <div class="timer-circle" id="seconds">00</div>
+                    <div class="timer-label"><span id="secondsLabel">секунд</span></div>
+                </div>
+            </div>
+            <div class="timer-image" id="timerImage">
+                <img src="вопрос.png" alt="Вопрос" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ДЕВЯТЫЙ БЛОК (Голосование) ===== -->
+    <section id="ninthBlock">
+        <div class="container">
+            <h2 class="vote-title" id="voteTitle">Нам интересно узнать ваше мнение</h2>
+
+            <form class="vote-form" id="voteForm">
+                <label for="fullName">Ваше имя и фамилия</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Например, Анна Иванова" required />
+
+                <label>Вы планируете быть с нами?</label>
+                <div class="vote-radio-group">
+                    <label class="vote-radio-item presence-item">
+                        <input type="radio" name="presence" value="yes" />
+                        <span>Да, обязательно</span>
+                    </label>
+                    <label class="vote-radio-item presence-item">
+                        <input type="radio" name="presence" value="no" />
+                        <span>Нет, не смогу</span>
+                    </label>
+                </div>
+
+                <label>Как вы думаете, кого мы ждём?</label>
+                <div class="vote-radio-group">
+                    <label class="vote-radio-item">
+                        <input type="radio" name="gender" value="boy" />
+                        <img src="мальчик.png" alt="Мальчик" />
+                        <span>Мальчик</span>
+                    </label>
+                    <label class="vote-radio-item">
+                        <input type="radio" name="gender" value="girl" />
+                        <img src="девочка.png" alt="Девочка" />
+                        <span>Девочка</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="vote-submit-btn">Отправить</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== ДЕСЯТЫЙ БЛОК (Контакты) ===== -->
+    <section id="tenthBlock">
+        <div class="container">
+            <h2 class="contacts-title" id="contactsTitle">Контакты</h2>
+            <p class="contacts-text" id="contactsText">
+                По всем вопросам вы можете связаться с нами:
+            </p>
+            <div class="contacts-number" id="contactsNumber">+7 (999) 123-45-67</div>
+        </div>
+    </section>
+
+    <script>
+        (function() {
+            // Прокрутка по клику на первом экране
+            const firstScreen = document.getElementById('firstScreen');
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const secondBlock = document.getElementById('secondBlock');
+
+            function scrollToSecond() {
+                secondBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            if (firstScreen && secondBlock) {
+                firstScreen.addEventListener('click', scrollToSecond);
+            }
+            if (scrollIndicator && secondBlock) {
+                scrollIndicator.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    scrollToSecond();
+                });
+            }
+
+            // --- ОБЩИЙ НАБЛЮДАТЕЛЬ для всех элементов с классами .visible ---
+            // Мы будем использовать IntersectionObserver для каждого элемента отдельно,
+            // но для простоты создадим один наблюдатель, который будет следить за всеми
+            // элементами, которые должны появиться при полной видимости (threshold: 1.0)
+            // и для ранних блоков (threshold: 0.15) сделаем отдельно.
+
+            // Ранние блоки (частичная видимость) – второй и третий блоки
+            const earlyElements = [
+                document.getElementById('greeting'),
+                document.getElementById('invitationText'),
+                document.getElementById('divider'),
+                document.getElementById('bigDate'),
+                document.getElementById('gatheringText'),
+                document.getElementById('cloudWrapper')
+            ].filter(el => el !== null);
+
+            if (earlyElements.length > 0 && 'IntersectionObserver' in window) {
+                const earlyObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Добавляем класс visible всем ранним элементам
+                            earlyElements.forEach(el => el.classList.add('visible'));
+                            earlyObserver.disconnect();
+                        }
+                    });
+                }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+                // Начинаем наблюдать за первым элементом (greeting)
+                if (earlyElements[0]) earlyObserver.observe(earlyElements[0]);
+            } else {
+                earlyElements.forEach(el => el.classList.add('visible'));
+            }
+
+            // Полная видимость для всех остальных блоков
+            const lateElements = [
+                document.getElementById('locationTitle'),
+                document.getElementById('locationName'),
+                document.getElementById('locationAddress'),
+                document.getElementById('mapContainer'),
+                document.getElementById('wishesTitle'),
+                document.getElementById('wishesText'),
+                document.getElementById('garlandWrapper'),
+                document.getElementById('dresscodeTitle'),
+                document.getElementById('dresscodeText'),
+                document.getElementById('dresscodeImage'),
+                document.getElementById('timerTitle'),
+                ...document.querySelectorAll('.timer-item'),
+                document.getElementById('timerImage'),
+                document.getElementById('voteTitle'),
+                document.getElementById('voteForm'),
+                document.getElementById('contactsTitle'),
+                document.getElementById('contactsText'),
+                document.getElementById('contactsNumber')
+            ].filter(el => el !== null);
+
+            // Функция для добавления visible всем элементам
+            function showAllLate() {
+                lateElements.forEach(el => el.classList.add('visible'));
+            }
+
+            if (lateElements.length > 0 && 'IntersectionObserver' in window) {
+                // Наблюдаем за первым элементом из списка (locationTitle)
+                const anchor = lateElements[0];
+                const lateObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            showAllLate();
+                            lateObserver.disconnect();
+                        }
+                    });
+                }, { threshold: 1.0, rootMargin: '0px 0px 0px 0px' });
+
+                if (anchor) lateObserver.observe(anchor);
+            } else {
+                showAllLate();
+            }
+
+            // --- Таймер ---
+            function updateTimer() {
+                const target = new Date('2026-10-10T17:00:00').getTime();
+                const now = new Date().getTime();
+                let diff = target - now;
+                if (diff < 0) diff = 0;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+                document.getElementById('daysLabel').textContent = declension(days, 'день', 'дня', 'дней');
+                document.getElementById('hoursLabel').textContent = declension(hours, 'час', 'часа', 'часов');
+                document.getElementById('minutesLabel').textContent = declension(minutes, 'минута', 'минуты', 'минут');
+                document.getElementById('secondsLabel').textContent = declension(seconds, 'секунда', 'секунды', 'секунд');
+            }
+
+            function declension(number, one, two, five) {
+                const n = Math.abs(number) % 100;
+                const n1 = n % 10;
+                if (n > 10 && n < 20) return five;
+                if (n1 > 1 && n1 < 5) return two;
+                if (n1 === 1) return one;
+                return five;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+
+            // --- Обработка формы голосования ---
+            const form = document.getElementById('voteForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('fullName').value.trim();
+                const presence = form.querySelector('input[name="presence"]:checked');
+                const gender = form.querySelector('input[name="gender"]:checked');
+
+                if (!name) {
+                    alert('Пожалуйста, укажите ваше имя и фамилию.');
+                    return;
+                }
+                if (!presence) {
+                    alert('Пожалуйста, выберите, будете ли вы присутствовать.');
+                    return;
+                }
+                if (!gender) {
+                    alert('Пожалуйста, выберите, кого вы думаете мы ждём.');
+                    return;
+                }
+
+                const presenceText = presence.value === 'yes' ? 'Да, буду' : 'Нет, не смогу';
+                const genderText = gender.value === 'boy' ? 'Мальчика' : 'Девочку';
+                alert(`Спасибо, ${name}! Ваш голос учтён.\nПрисутствие: ${presenceText}\nВы выбрали: ${genderText}`);
+                form.reset();
+            });
+
+            // Проверка загрузки изображений
+            const images = ['главная.png', 'облако.png', 'гирлянда.png', 'шарики.png', 'вопрос.png', 'мальчик.png', 'девочка.png'];
+            images.forEach(src => {
+                const img = new Image();
+                img.onload = () => console.log(`${src} загружено`);
+                img.onerror = () => console.warn(`Файл ${src} не найден`);
+                img.src = src;
+            });
+        })();
+    </script>
+
+</body>
+</html>
